@@ -1,7 +1,5 @@
 from django.contrib.auth.models import User
-from rest_framework import serializers
-
-from rest_framework.serializers import ModelSerializer, Serializer
+from rest_framework.serializers import ModelSerializer
 
 from todo.models import Todo
 
@@ -11,7 +9,6 @@ class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'password', 'email', 'first_name', 'last_name')
-        # read_only_fields = ('password',)
 
     def create(self, validated_data):
         user = User.objects.create(
@@ -34,6 +31,3 @@ class ToDoSerializer(ModelSerializer):
     def create(self, validated_data):
         validated_data["created_by"] = self.context["request"].user
         return super().create(validated_data)
-
-
-
