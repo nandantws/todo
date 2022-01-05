@@ -2,4 +2,5 @@
 /db.sqlite3
 todo/__pycache__
 todo/migrations/__pycache__
+todo/test/__pycache__
 document/__pycache__
