@@ -1,3 +1,4 @@
 /.vscode
 /db.sqlite3
-todo/__pycache__/
+todo/__pycache__
+document/__pycache__
