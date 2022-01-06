@@ -47,7 +47,7 @@ class TodoCollectionViewSet(ModelViewSet):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return TodoCollection.objects.filter(created_by=self.request.user)
+        return TodoCollection.objects.prefetch_related('todo').filter(created_by=self.request.user)
 
     def perform_create(self, serializer):
         return serializer.save(created_by=self.request.user)

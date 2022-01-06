@@ -29,6 +29,7 @@ class ToDoSerializer(ModelSerializer):
         fields = ('title','description')
 
 
+
 class TodoCollectionSerializer(ModelSerializer):
     todo = ToDoSerializer(many=True,read_only=True)
 
