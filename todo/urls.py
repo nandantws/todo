@@ -3,7 +3,7 @@ from .views import RegisterView, LoginView, TodoViewSet
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('task', TodoViewSet)
+router.register('todo', TodoViewSet,basename='todo')
 
 urlpatterns = [
     path('register/', RegisterView.as_view(),name='register'),

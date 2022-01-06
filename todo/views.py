@@ -31,7 +31,7 @@ class RegisterView(CreateAPIView):
 
 
 class LoginView(APIView):
-
+    
     def post(self, request, *args, **kwargs):
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -42,12 +42,13 @@ class LoginView(APIView):
 
 
 class TodoViewSet(ModelViewSet):
-    queryset = Todo.objects.all()
     serializer_class = ToDoSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        user = User.objects.get(id=self.request.user.id)
-        return Todo.objects.filter(created_by=user)
+        return Todo.objects.filter(created_by=self.request.user)
+
+    def perform_create(self, serializer):
+        return serializer.save(created_by=self.request.user)
 
 

@@ -6,7 +6,7 @@ from django.db.models.deletion import CASCADE
 
 class Todo(models.Model):
 
-    status_choices = (
+    STATUS_CHOICES = (
         ('1', 'Pending'),
         ('2', 'In Progress'),
         ('3', 'Completed'),
@@ -14,7 +14,7 @@ class Todo(models.Model):
     title = models.CharField(max_length=20)
     description = models.CharField(max_length=40)
     status = models.CharField(
-        max_length=20, choices=status_choices, default='1')
+        max_length=20, choices=STATUS_CHOICES, default='1')
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
