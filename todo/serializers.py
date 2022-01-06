@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework.serializers import ModelSerializer
-
-from todo.models import Todo
-
+from todo.models import Todo, TodoCollection
 
 class UserSerializer(ModelSerializer):
 
@@ -23,9 +21,20 @@ class UserSerializer(ModelSerializer):
         return user
 
 
+
+
 class ToDoSerializer(ModelSerializer):
     class Meta:
         model = Todo
-        exclude = ('created_by',)
+        fields = ('title','description')
+
+
+class TodoCollectionSerializer(ModelSerializer):
+    todo = ToDoSerializer(many=True,read_only=True)
+
+    class Meta:
+        model = TodoCollection
+        fields = ('name','todo')
+
 
 

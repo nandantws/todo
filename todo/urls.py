@@ -1,9 +1,9 @@
 from django.urls import path
-from .views import RegisterView, LoginView, TodoViewSet
 from rest_framework.routers import DefaultRouter
+from .views import RegisterView, LoginView, TodoCollectionViewSet
 
 router = DefaultRouter()
-router.register('todo', TodoViewSet,basename='todo')
+router.register('todos', TodoCollectionViewSet,basename='todo')
 
 urlpatterns = [
     path('register/', RegisterView.as_view(),name='register'),

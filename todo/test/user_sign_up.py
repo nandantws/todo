@@ -1,7 +1,8 @@
+from django.contrib.auth.models import User
+from django.urls import reverse
+
 from rest_framework import status
 from rest_framework.test import APITestCase
-from django.urls import reverse
-from django.contrib.auth.models import User
 
 
 class UserSignUpTestCase(APITestCase):
@@ -25,6 +26,7 @@ class UserSignUpTestCase(APITestCase):
             'first_name': self.first_name,
             'last_name': self.last_name,
         }
+
         # Make request
         response = self.client.post(self.signup_url, signup_dict)
 

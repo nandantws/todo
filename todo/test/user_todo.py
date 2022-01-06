@@ -1,5 +1,6 @@
 from rest_framework import status
 from rest_framework.test import APITestCase, APIClient
+
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -20,7 +21,6 @@ class TodoCRUDTestCase(APITestCase):
 
 
     def test_if_list_todo_works_with_authentication(self):
-
         client = APIClient()
         client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.user_token}')
         response = client.get(reverse('todo-list'))
@@ -34,14 +34,13 @@ class TodoCRUDTestCase(APITestCase):
 
 
     def test_if_list_todo_doesnot_works_without_authentication(self):
+        client = APIClient()
+        client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.invalid_user_token}')
+        response = client.get(reverse('todo-list'))
 
-            client = APIClient()
-            client.credentials(HTTP_AUTHORIZATION=f'Bearer {self.invalid_user_token}')
-            response = client.get(reverse('todo-list'))
-
-            # Check status response
-            self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
-            self.assertEqual(str(response.data['detail']), 'User not found')
+        # Check status response
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(str(response.data['detail']), 'User not found')
 
 
 

@@ -8,9 +8,9 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework import status
 
-from todo.models import Todo
-from todo.serializers import ToDoSerializer, UserSerializer
-from .utils import get_tokens_for_user
+from todo.models import Todo, TodoCollection
+from todo.serializers import ToDoSerializer, TodoCollectionSerializer, UserSerializer
+from todo.utils import get_tokens_for_user
 
 
 # Create your views here.
@@ -19,7 +19,7 @@ class RegisterView(CreateAPIView):
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
@@ -32,7 +32,7 @@ class RegisterView(CreateAPIView):
 
 class LoginView(APIView):
     
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
@@ -41,14 +41,28 @@ class LoginView(APIView):
         return Response({'message': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class TodoViewSet(ModelViewSet):
-    serializer_class = ToDoSerializer
+
+class TodoCollectionViewSet(ModelViewSet):
+    serializer_class = TodoCollectionSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        return Todo.objects.filter(created_by=self.request.user)
+        return TodoCollection.objects.filter(created_by=self.request.user)
 
     def perform_create(self, serializer):
         return serializer.save(created_by=self.request.user)
+        
+
+# class TodoViewSet(ModelViewSet):
+#     serializer_class = ToDoSerializer
+#     permission_classes = (IsAuthenticated,)
+
+#     def get_queryset(self):
+#         return Todo.objects.filter(created_by=self.request.user)
+
+#     def perform_create(self, serializer):
+#         return serializer.save(created_by=self.request.user)
+
+
 
 
