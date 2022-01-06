@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.db.models.query import QuerySet
 from rest_framework.serializers import ModelSerializer
 from todo.models import Todo, TodoCollection
 
@@ -32,7 +33,7 @@ class ToDoSerializer(ModelSerializer):
 
 class TodoCollectionSerializer(ModelSerializer):
     todo = ToDoSerializer(many=True,read_only=True)
-
+    
     class Meta:
         model = TodoCollection
         fields = ('name','todo')
