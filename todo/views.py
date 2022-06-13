@@ -44,10 +44,12 @@ class LoginView(APIView):
 class TodoViewSet(ModelViewSet):
     queryset = Todo.objects.all()
     serializer_class = ToDoSerializer
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
-    def get_queryset(self):
-        user = User.objects.get(id=self.request.user.id)
-        return Todo.objects.filter(created_by=user)
+    # permission_classes = (IsAuthenticated,)
+
+    # def get_queryset(self):
+    #     user = User.objects.get(id=self.request.user.id)
+    #     return Todo.objects.filter(created_by=user)
 
 

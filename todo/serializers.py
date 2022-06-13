@@ -29,5 +29,6 @@ class ToDoSerializer(ModelSerializer):
         exclude = ('created_by',)
 
     def create(self, validated_data):
-        validated_data["created_by"] = self.context["request"].user
+        # validated_data["created_by"] = self.context["request"].user
+        validated_data["created_by"] = User.objects.all().first()
         return super().create(validated_data)
