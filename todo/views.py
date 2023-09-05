@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.generics import CreateAPIView
 from rest_framework.viewsets import ModelViewSet
@@ -25,9 +25,10 @@ class RegisterView(CreateAPIView):
         user = serializer.save()
         return Response({
             "message": "User Created Successfully.",
-            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "user": UserSerializer(
+                user, context=self.get_serializer_context()).data,
             "token": get_tokens_for_user(user)
-        },status=status.HTTP_201_CREATED)
+        }, status=status.HTTP_201_CREATED)
 
 
 class LoginView(APIView):
