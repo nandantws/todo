@@ -12,7 +12,9 @@ jobs:
     steps:
       - name: PR Agent action step
         id: pragent
-        uses: nandantws/pr-agent@main/actionns.yml
+        uses: nandantws/pr-agent@main
+        with:
+          action_file: actionns.yml
         env:
           OPENAI_KEY: ${{ secrets.YNCxEaPGD8lsMR-SYe0eE1Ln-LoOLfpcxeUfpl3RrTuk2fbJluzbH8wd4V8raDTN6D15QaMofDdMZHQCkHGuySo_zPv76kn-EnM2r27XJe6qjKUT5P1qBELpZRML5CL4 }}
           GITHUB_TOKEN: ${{ secrets.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 }}
