@@ -38,8 +38,11 @@ class LoginView(APIView):
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
         if user:
-            return Response(get_tokens_for_user(user), status=status.HTTP_200_OK)
-        return Response({'message': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                get_tokens_for_user(user), status=status.HTTP_200_OK)
+        return Response(
+            {'message': 'Invalid Credentials'},
+            status=status.HTTP_400_BAD_REQUEST)
 
 
 class TodoViewSet(ModelViewSet):
